@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .slide-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 600px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: transform 0.2s ease-out;
+            transition-delay: 0s;
+        }
+
+        .panel-enter {
+            transform: translateX(100%);
+        }
+
+        .panel-enter-start {
+            transform: translateX(100%);
+        }
+
+        .panel-enter-end {
+            transform: translateX(0);
+        }
+
+        .panel-leave {
+            transform: translateX(0);
+        }
+
+        .panel-leave-start {
+            transform: translateX(0);
+        }
+
+        .panel-leave-end {
+            transform: translateX(100%);
+        }
+
+        .wrapper {
+            padding: 2em;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .panel-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .panel-results {
+            flex: 1;
+            overflow: scroll;
+            padding: 0 10px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: scroll;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body x-data="app" @keyup.escape="hidePanel">
+    <div class="wrapper">
+
+        <div>
+            <h1 class="mb-4">Productos favoritos</h1>
+            <div class="table-container">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%">#</th>
+                            <th scope="col" style="width: 32%">Nombre</th>
+                            <th scope="col" style="width: 20%">SKU</th>
+                            <th scope="col" style="width: 20%">Marca</th>
+                            <th scope="col" style="width: 10%">Precio</th>
+                            <th scope="col" style="width: 8%"></th>
+                        </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="favorite, index in favorites" :key="`fav-${favorite.sku}`">
+                            <tr>
+                                <th scope="row" x-text="index + 1"></th>
+                                <td x-text="favorite.name"></td>
+                                <td x-text="favorite.sku"></td>
+                                <td x-text="favorite.brand"></td>
+                                <td x-text="`$${favorite.price}`"></td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" @click="removeFromFavorites(favorite.sku)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <div class="alert alert-primary" role="alert" x-show="favorites.length === 0">
+                    Aún no has agregado productos favoritos
+                </div>
+            </div>
+            <button class="btn btn-primary" @click="showPanel">Agregar un producto</button>
+        </div>
+
+        <div x-show="panelVisible" x-transition.opacity class="overlay"></div>
+
+        <panel class="slide-panel card" @click.outside="hidePanel" x-show="panelVisible"
+            x-transition:enter="panel-enter" x-transition:enter-start="panel-enter-start"
+            x-transition:enter-end="panel-enter-end" x-transition:leave="panel-leave"
+            x-transition:leave-start="panel-leave-start" x-transition:leave-end="panel-leave-end">
+            <div class="card-body panel-body">
+                <div class="panel-controls">
+                    <div class="text-sm mb-2" @click="hidePanel">
+                        cerrar
+                    </div>
+                    <input type="text" x-ref="search" x-model.debounce="search"
+                        placeholder="Busca un producto por sku, nombre o descripción" class="form-control mb-3">
+                </div>
+                <div class="panel-results">
+                    <template x-for="result in results" :key="`prod-${result.sku}`">
+                        <label class="mb-3">
+                            <input class="form-check-input me-1" type="checkbox" x-model="result.favorite">
+                            <span x-text="`${result.name} | sku: ${result.sku} | ${result.brand}`"></span>
+                        </label>
+                    </template>
+                    </ul>
+                </div>
+        </panel>
+    </div>
+
+    <script>
+        const app = {
+            products: [],
+            search: '',
+            panelVisible: false,
+            get results() {
+                if (!this.search) {
+                    return [];
+                }
+                return this.products.filter(product => [product.name, product.brand, product.sku].join(' ').toLowerCase().includes(this.search.toLowerCase()));
+            },
+            get favorites() {
+                return this.products.filter(product => product.favorite);
+            },
+            addToFavorites(sku) {
+                const product = this.products.find(product => product.sku === sku);
+                product.favorite = true;
+            },
+            removeFromFavorites(sku) {
+                const product = this.products.find(product => product.sku === sku);
+                product.favorite = false;
+            },
+            showPanel() {
+                this.panelVisible = true;
+                this.$nextTick(() => this.$refs.search.focus());
+            },
+            hidePanel() {
+                this.panelVisible = false;
+            },
+            init() {
+                fetch('data/products.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.products = data.map(product => ({ ...product, favorite: false, selected: false }));
+                    });
+            }
+        };
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+
+</html>

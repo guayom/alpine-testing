@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Grass-Fed Beef",
+    "brand": "Pasture Prime",
+    "sku": "PP-GFB-500G",
+    "price": 9.99
+  },
+  {
+    "name": "Organic Spinach",
+    "brand": "Leafy Greens",
+    "sku": "LG-OS-200G",
+    "price": 2.49
+  },
+  {
+    "name": "Fair Trade Coffee",
+    "brand": "Bean Bliss",
+    "sku": "BB-FTC-250G",
+    "price": 6.99
+  },
+  {
+    "name": "Wild-Caught Salmon",
+    "brand": "Seafood Delight",
+    "sku": "SD-WCS-200G",
+    "price": 12.99
+  },
+  {
+    "name": "Organic Quinoa",
+    "brand": "Grain Goodness",
+    "sku": "GG-OQ-500G",
+    "price": 4.99
+  },
+  {
+    "name": "Vegan Protein Powder",
+    "brand": "Plant Power",
+    "sku": "PP-VPP-1KG",
+    "price": 19.99
+  },
+  {
+    "name": "Extra Virgin Olive Oil",
+    "brand": "Mediterranean Delights",
+    "sku": "MD-EVOO-500ML",
+    "price": 8.99
+  },
+  {
+    "name": "Organic Blueberries",
+    "brand": "Berry Bliss",
+    "sku": "BB-OB-250G",
+    "price": 4.99
+  },
+  {
+    "name": "Himalayan Pink Salt",
+    "brand": "Salt of the Earth",
+    "sku": "SE-HP-500G",
+    "price": 3.49
+  },
+  {
+    "name": "Organic Tomatoes",
+    "brand": "Farm Fresh",
+    "sku": "FF-OT-1KG",
+    "price": 2.99
+  },
+  {
+    "name": "Raw Honey",
+    "brand": "Bee's Bounty",
+    "sku": "BB-RH-500G",
+    "price": 7.99
+  },
+  {
+    "name": "Organic Peanut Butter",
+    "brand": "Nutty Delights",
+    "sku": "ND-OPB-500G",
+    "price": 5.49
+  },
+  {
+    "name": "Whole Grain Pasta",
+    "brand": "Pasta Paradise",
+    "sku": "PP-WGP-500G",
+    "price": 2.99
+  },
+  {
+    "name": "Organic Kale",
+    "brand": "Green Goodness",
+    "sku": "GG-OK-200G",
+    "price": 1.99
+  },
+  {
+    "name": "Organic Whole Wheat Bread",
+    "brand": "Healthy Bakery",
+    "sku": "HB-OWWB-1KGY",
+    "price": 5.99
+  },
+  {
+    "name": "Natural Almond Butter",
+    "brand": "Nutty Naturals",
+    "sku": "NN-AB-500G",
+    "price": 3.99
+  },
+  {
+    "name": "Gluten-Free Oatmeal",
+    "brand": "Oats & More",
+    "sku": "OM-GFO-1KG",
+    "price": 1.0
+  },
+  {
+    "name": "Organic Green Tea",
+    "brand": "Tea Time",
+    "sku": "TT-OGT-100G",
+    "price": 2.0
+  },
+  {
+    "name": "Dark Chocolate 70%",
+    "brand": "Choco Lovers",
+    "sku": "CL-DC70-100G",
+    "price": 5.99
+  }
+]
