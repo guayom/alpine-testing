@@ -94,7 +94,6 @@
                 <table class="table table-responsive">
                     <thead>
                         <tr>
-                            <th scope="col" style="width: 5%">#</th>
                             <th scope="col" style="width: 32%">Nombre</th>
                             <th scope="col" style="width: 20%">SKU</th>
                             <th scope="col" style="width: 20%">Marca</th>
@@ -104,9 +103,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <template x-for="favorite, index in favorites" :key="`fav-${favorite.sku}`">
+                        <template x-for="favorite in favorites" :key="`fav-${favorite.sku}`">
                             <tr>
-                                <th scope="row" x-text="index + 1"></th>
                                 <td x-text="favorite.name"></td>
                                 <td x-text="favorite.sku"></td>
                                 <td x-text="favorite.brand"></td>
