@@ -68,19 +68,64 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            overflow: visible;
         }
 
         .panel-results {
             flex: 1;
-            overflow: scroll;
+            overflow-y: scroll;
             padding: 0 10px;
         }
 
         .table-container {
             width: 100%;
-            overflow-x: scroll;
             margin-bottom: 20px;
+        }
+
+        @media (max-width: 767px) {
+            .table-container {
+                overflow-x: scroll;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+
+        @keyframes row-enter {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0%);
+            }
+        }
+
+        @keyframes row-exit {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animated-row {
+            animation: row-enter 0.2s ease-out;
+        }
+
+        .animated-row-exit {
+            animation: row-exit 0.3s ease-out;
         }
     </style>
 </head>
@@ -104,13 +149,13 @@
                     </thead>
                     <tbody>
                         <template x-for="favorite in favorites" :key="`fav-${favorite.sku}`">
-                            <tr>
+                            <tr class="animated-row" :class="{'animated-row-exit': favorite.removed}">
                                 <td x-text="favorite.name"></td>
                                 <td x-text="favorite.sku"></td>
                                 <td x-text="favorite.brand"></td>
                                 <td x-text="`$${favorite.price}`"></td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm" @click="removeFromFavorites(favorite.sku)">
+                                    <button class="btn btn-danger btn-sm" @click="removeFromFavorites(favorite)">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
@@ -133,20 +178,24 @@
             x-transition:leave-start="panel-leave-start" x-transition:leave-end="panel-leave-end">
             <div class="card-body panel-body">
                 <div class="panel-controls">
-                    <div class="text-sm mb-2" @click="hidePanel">
-                        cerrar
-                    </div>
+                    <button class="btn btn-link" @click="hidePanel">Cerrar</button>
                     <input type="text" x-ref="search" x-model.debounce="search"
                         placeholder="Busca un producto por sku, nombre o descripción" class="form-control mb-3">
                 </div>
                 <div class="panel-results">
                     <template x-for="result in results" :key="`prod-${result.sku}`">
                         <label class="mb-3">
-                            <input class="form-check-input me-1" type="checkbox" x-model="result.favorite">
-                            <span x-text="`${result.name} | sku: ${result.sku} | ${result.brand}`"></span>
+                            <input class="form-check-input me-1" type="checkbox" x-model="result.favorite"
+                                @click="toggleTempFavorite(result.sku)">
+                            <span x-text="`${result.name} | sku: ${result.sku} | ${result.brand}`"
+                                @click="toggleTempFavorite(result.sku)"></span>
                         </label>
                     </template>
                     </ul>
+                </div>
+                <div class="panel-controls-below">
+                    <button class="btn btn-primary" @click="hidePanel">Agregar</button>
+                    <button class="btn btn-link" @click="cancel">Cancelar</button>
                 </div>
         </panel>
     </div>
@@ -155,6 +204,7 @@
         const app = {
             products: [],
             search: '',
+            tempFavorites: [],
             panelVisible: false,
             get results() {
                 if (!this.search) {
@@ -165,20 +215,45 @@
             get favorites() {
                 return this.products.filter(product => product.favorite);
             },
+            toggleTempFavorite(sku) {
+                const product = this.products.find(product => product.sku === sku);
+                this.tempFavorites.push(product.sku);
+            },
             addToFavorites(sku) {
                 const product = this.products.find(product => product.sku === sku);
                 product.favorite = true;
             },
-            removeFromFavorites(sku) {
-                const product = this.products.find(product => product.sku === sku);
-                product.favorite = false;
+            removeFromFavorites(product) {
+                product.removed = true;
+                setTimeout(() => {
+                    product.favorite = false;
+                    product.removed = false;
+                }, 299);
             },
             showPanel() {
                 this.panelVisible = true;
+                this.tempFavorites = [];
                 this.$nextTick(() => this.$refs.search.focus());
             },
             hidePanel() {
                 this.panelVisible = false;
+                this.tempFavorites = [];
+            },
+            deleteFavoritesAndHidePanel() {
+                this.products.map(product => {
+                    if (this.tempFavorites.includes(product.sku)) {
+                        product.favorite = !product.favorite;
+                    }
+                });
+                this.$nextTick(() => {
+                    this.tempFavorites = [];
+                });
+                this.$nextTick(() => {
+                    this.hidePanel();
+                });
+            },
+            cancel() {
+                this.deleteFavoritesAndHidePanel()
             },
             init() {
                 fetch('data/products.json')
