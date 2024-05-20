@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpine.js Table Row Animation</title>
+  <style>
+    @keyframes rowAnimation {
+      0% {
+        height: 0;
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      50% {
+        height: auto;
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      100% {
+        height: auto;
+        opacity: 1;
+        transform: translateX(0%);
+      }
+    }
+
+    tr.animate {
+      animation: rowAnimation 1s forwards;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+</head>
+<body>
+  <div x-data="{ rows: [] }">
+    <button @click="rows.push({ id: rows.length, text: 'Row ' + (rows.length + 1) })">
+      Add Row
+    </button>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Text</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="row in rows" :key="row.id">
+          <tr class="animate">
+            <td x-text="row.id"></td>
+            <td x-text="row.text"></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
