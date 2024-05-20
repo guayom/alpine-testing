@@ -79,17 +79,12 @@
         .table-container {
             width: 100%;
             margin-bottom: 20px;
-        }
-
-        @media (max-width: 767px) {
-            .table-container {
-                overflow-x: scroll;
-            }
+            overflow-x: auto;
         }
 
         @media (min-width: 768px) {
             .table-container {
-                overflow-x: auto;
+                overflow-x: hidden;
             }
         }
 
@@ -194,7 +189,7 @@
                     </ul>
                 </div>
                 <div class="panel-controls-below">
-                    <button class="btn btn-primary" @click="hidePanel">Agregar</button>
+                    <button class="btn btn-primary" @click="hidePanel">Aceptar</button>
                     <button class="btn btn-link" @click="cancel">Cancelar</button>
                 </div>
         </panel>
