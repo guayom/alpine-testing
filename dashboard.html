@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alisto</title>
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <aside x-data="{sidebarCollapsed: false}" id="sidebar" :class="{'collapsed': sidebarCollapsed}">
+        <button @click="sidebarCollapsed = !sidebarCollapsed" id="sidebar-collapse-button">x</button>
+        <header class="sidebar-header">
+            <!-- Header content goes here -->
+            <img src="/assets/logo-alisto-negro.svg" alt="Alisto logo" class="sidebar-logo">
+        </header>
+        <section id="sidebar-main-section">
+            <h3>Rutina</h3>
+            <nav>
+                <ul>
+                    <li><a href="/partials/dashboard" hx-get="/partials/dashboard.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Dashboard</a>
+                    </li>
+                    <li><a href="/partials/chats" hx-get="/partials/chats.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Chats</a>
+                    </li>
+                    <li><a href="/partials/pedidos" hx-get="/partials/pedidos.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Pedidos</a>
+                    </li>
+                    <li><a href="/partials/calendario" hx-get="/partials/calendario.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Calendario</a>
+                    </li>
+                    <li><a href="/partials/clientes" hx-get="/partials/clientes.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Clientes</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h3>Operaciones</h3>
+            <nav>
+                <ul>
+                    <li><a href="/partials/productos" hx-get="/partials/productos.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Productos</a>
+                    </li>
+                    <li><a href="/partials/soporte" hx-get="/partials/soporte.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Precios</a>
+                    </li>
+                    <li><a href="/partials/equipo" hx-get="/partials/equipo.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Equipo</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </section>
+        <!-- Sidebar content goes here -->
+        <footer>
+            <nav>
+                <ul>
+                    <li><a href="/partials/permisos" hx-get="/partials/permisos.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Opciones</a>
+                    </li>
+                    <li><a href="/partials/cuenta" hx-get="/partials/cuenta.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Mi cuenta</a>
+                    </li>
+                    <li><a href="/partials/cuenta" hx-get="/partials/cuenta.html" hx-target="#main"
+                            hx-push-state="innerHTML" hx-swap="innerHTML transition:true">Salir</a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- Footer content goes here -->
+        </footer>
+    </aside>
+    <section id="main-dashboard-container">
+        <header id="header" class="header">
+            Dashboard
+            <!-- Header content goes here -->
+        </header>
+        <main id="main" class="sample-transition">
+            <!-- Main content goes here -->
+        </main>
+
+        <footer id="footer">
+            <!-- Footer content goes here -->
+        </footer>
+    </section>
+
+</body>
+
+</html>
