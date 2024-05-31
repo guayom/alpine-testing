@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive HTML5 Document</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+    <style>
+        .htmx-indicator {
+            display: none;
+        }
+
+        .htmx-request .htmx-indicator {
+            display: inline;
+        }
+
+        .htmx-request.htmx-indicator {
+            display: inline;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .comments-list {
+            animation: fade-in 1s;
+        }
+
+        #comments-container {
+            transition: all 0.5s ease-in-out;
+
+            &.htmx-swapping {
+                opacity: 0;
+                transition: opacity 1s ease-out;
+            }
+        }
+
+        .fade-me-in {
+            animation: fade-in 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>HTMX demo</h1>
+    <p>This page doesn't reload to fetch comments</p>
+    <div id="comments-container">
+        <span>No comments yet</span>
+        <button hx-get="/fake-api/comments.html" hx-trigger="click" hx-target="#comments-container"
+            hx-swap="innerHTML swap:0.5s">Get comments</button>
+    </div>
+</body>
+
+</html>

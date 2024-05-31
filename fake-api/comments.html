@@ -1,0 +1,59 @@
+<ul class="comments-list">
+    <li>
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-author">John Doe</div>
+                <div class="comment-date">2020-01-01</div>
+            </div>
+            <div class="comment-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ut</p>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-author">Jane Doe</div>
+                <div class="comment-date">2020-01-02</div>
+            </div>
+            <div class="comment-body">
+                <p>Aliquam erat volutpat. Nullam nec purus ut sem fermentum tincidunt.</p>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-author">John Doe</div>
+                <div class="comment-date">2020-01-03</div>
+            </div>
+            <div class="comment-body">
+                <p>Curabitur nec nunc nec libero tincidunt fermentum. Nullam nec purus ut sem.</p>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-author">Jane Doe</div>
+                <div class="comment-date">2020-01-04</div>
+            </div>
+            <div class="comment-body">
+                <p>Curabitur nec nunc nec libero tincidunt fermentum. Nullam nec purus ut sem.</p>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-author">John Doe</div>
+                <div class="comment-date">2020-01-05</div>
+            </div>
+            <div class="comment-body">
+                <p>Curabitur nec nunc nec libero tincidunt fermentum. Nullam nec purus ut sem.</p>
+            </div>
+        </div>
+    </li>
+</ul>
+<button hx-get="/fake-api/no-comments.html" hx-trigger="click" hx-target="#comments-container"
+    hx-swap="innerHTML swap:0.5s">Delete comments</button>
